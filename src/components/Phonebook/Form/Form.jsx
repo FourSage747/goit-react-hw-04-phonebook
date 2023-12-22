@@ -1,37 +1,34 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
-export class Form extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
-
-  handleClickName = ({ target }) => {
-    this.setState({
-      [target.name]: target.value,
-    });
-  };
-  // handleClickNumber = ({ target }) => {
-  //   this.setState({
-  //     number: target.value,
-  //   });
+export const Form = ({createUser}) => {
+  // state = {
+  //   name: '',
+  //   number: '',
   // };
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
 
-  onClick = (e) => {
+  const handleClickName = ({ target }) => {
+    setName(target.value)
+  };
+  const handleClickNumber = ({ target }) => {
+    setNumber(target.value)
+  };
+
+
+
+  const onClick = (e) => {
     e.preventDefault();
-    if (!this.state.name.trim() || !this.state.number.trim()) {
+    if (!name.trim() || !number.trim()) {
       return;
     }
-    this.props.createUser(this.state);
-    this.setState({
-      name: '',
-      number: '',
-    });
+    createUser(name, number);
+    setName('')
+    setNumber('')
   };
 
-  render() {
     return (
-      <form onSubmit={this.onClick}>
+      <form onSubmit={onClick}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Name
@@ -42,8 +39,8 @@ export class Form extends Component {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            onChange={this.handleClickName}
-            value={this.state.name}
+            onChange={handleClickName}
+            value={name}
             required
           />
         </div>
@@ -56,8 +53,8 @@ export class Form extends Component {
             type="text"
             className="form-control"
             id="exampleInputPassword1"
-            onChange={this.handleClickName}
-            value={this.state.number}
+            onChange={handleClickNumber}
+            value={number}
             required
           />
         </div>
@@ -69,5 +66,4 @@ export class Form extends Component {
         </button>
       </form>
     );
-  }
 }
